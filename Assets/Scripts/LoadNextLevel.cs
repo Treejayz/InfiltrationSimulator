@@ -3,21 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class LoadNextLevel : MonoBehaviour {
-
-	public VRIO_Button button;
 	
 	bool triggered = false;
-	// Update is called once per frame
-	void Update () {
-		if (!triggered && button.pressed){
-			triggered = true;
-			StartCoroutine("LoadLevel");
-		}
-	}
 
-	IEnumerator LoadLevel() {
+    public void NextLevel(string level)
+    {
+        if (!triggered)
+        {
+            triggered = true;
+            StartCoroutine("LoadLevel", level);
+        }
+    }
+
+	IEnumerator LoadLevel(string level) {
 		GetComponent<ParticleSystem>().Play();
 		yield return new WaitForSeconds(6f);
-		SteamVR_LoadLevel.Begin("Level2");
+		SteamVR_LoadLevel.Begin(level);
 	}
 }

@@ -14,6 +14,10 @@ public class VRIO_Hold : VRInteractableObject
     public override void Grab(GameObject controller)
     {
         base.Grab(controller);
+        if (GetComponent<Return>() != null)
+        {
+            GetComponent<Return>().beingHeld = true;
+        }
         prevPos = controller.transform.position;
         transform.position = controller.transform.position + controller.transform.rotation * offset;
         transform.rotation = controller.transform.rotation * Quaternion.Euler(angle);
@@ -25,6 +29,10 @@ public class VRIO_Hold : VRInteractableObject
 
     public override void Release(GameObject controller)
     {
+        if (GetComponent<Return>() != null)
+        {
+            GetComponent<Return>().beingHeld = false;
+        }
         if (controller == currentController && controller.GetComponent<FixedJoint>())
         {
             controller.GetComponent<FixedJoint>().connectedBody = null;

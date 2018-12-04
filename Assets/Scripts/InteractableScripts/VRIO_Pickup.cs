@@ -11,6 +11,11 @@ public class VRIO_Pickup : VRInteractableObject
     public override void Grab(GameObject controller)
     {
         base.Grab(controller);
+        if (GetComponent<Return>() != null)
+        {
+            GetComponent<Return>().beingHeld = true;
+        }
+
         prevPos = controller.transform.position;
         FixedJoint fx = controller.AddComponent<FixedJoint>();
         fx.breakForce = 2000;
@@ -20,6 +25,10 @@ public class VRIO_Pickup : VRInteractableObject
 
     public override void Release(GameObject controller)
     {
+        if (GetComponent<Return>() != null)
+        {
+            GetComponent<Return>().beingHeld = false;
+        }
         if (controller == currentController && controller.GetComponent<FixedJoint>())
         {
             controller.GetComponent<FixedJoint>().connectedBody = null;

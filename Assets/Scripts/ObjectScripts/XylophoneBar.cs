@@ -4,20 +4,22 @@ using UnityEngine;
 
 public class XylophoneBar : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    public XylophoneLevel manager;
+
+    bool cooldown = false;
 
 	void OnCollisionEnter(Collision col) {
-		if (col.gameObject.name == "Drumstick") {
-			print("hit");
+		if (col.gameObject.name == "Drumstick" && !cooldown) {
+            manager.HitNote(name);
 			GetComponent<AudioSource>().Play();
+            cooldown = true;
+            StartCoroutine("Wait");
 		}
 	}
+
+    IEnumerator Wait()
+    {
+        yield return new WaitForSeconds(0.1f);
+        cooldown = false;
+    }
 }

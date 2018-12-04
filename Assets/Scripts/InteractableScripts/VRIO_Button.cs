@@ -26,7 +26,10 @@ public class VRIO_Button : VRInteractableObject
         SteamVR_Controller.Input((int)controller.GetComponent<SteamVR_TrackedObject>().index).TriggerHapticPulse(50000);
         StopAllCoroutines();
         StartCoroutine("Press");
-
+        if (GetComponent<AudioSource>() != null)
+        {
+            GetComponent<AudioSource>().Play();
+        }
     }
 
     public override void Release(GameObject controller)
