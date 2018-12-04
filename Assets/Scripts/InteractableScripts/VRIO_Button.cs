@@ -7,6 +7,8 @@ public class VRIO_Button : VRInteractableObject
 
     public float pressDistance;
 
+    public GameObject[] targets;
+
     [HideInInspector]
     public bool pressed = false;
 
@@ -29,6 +31,13 @@ public class VRIO_Button : VRInteractableObject
         if (GetComponent<AudioSource>() != null)
         {
             GetComponent<AudioSource>().Play();
+        }
+        if (targets.Length > 0)
+        {
+            foreach(GameObject target in targets)
+            {
+                target.SendMessage("Press", name);
+            }
         }
     }
 
