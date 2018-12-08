@@ -30,7 +30,9 @@ public class VRIO_Button : VRInteractableObject
         StartCoroutine("Press");
         if (GetComponent<AudioSource>() != null)
         {
-            GetComponent<AudioSource>().Play();
+            foreach(AudioSource aud in GetComponents<AudioSource>())
+
+            aud.Play();
         }
         if (targets.Length > 0)
         {

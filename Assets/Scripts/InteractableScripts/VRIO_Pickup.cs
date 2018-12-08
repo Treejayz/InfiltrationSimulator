@@ -5,8 +5,13 @@ using UnityEngine;
 public class VRIO_Pickup : VRInteractableObject
 {
 
+    public bool isParented = false;
+
     Vector3 prevPos = new Vector3(0, 0, 0);
     Vector3 velocity;
+
+    [HideInInspector]
+    public bool held = false;
 
     public override void Grab(GameObject controller)
     {
@@ -17,10 +22,19 @@ public class VRIO_Pickup : VRInteractableObject
         }
 
         prevPos = controller.transform.position;
-        FixedJoint fx = controller.AddComponent<FixedJoint>();
-        fx.breakForce = 2000;
-        fx.breakTorque = 2000;
-        fx.connectedBody = GetComponent<Rigidbody>();
+        if (isParented)
+        {
+            transform.parent = controller.transform;
+            GetComponent<Rigidbody>().isKinematic = true;
+        }
+        else
+        {
+            FixedJoint fx = controller.AddComponent<FixedJoint>();
+            fx.breakForce = 2000;
+            fx.breakTorque = 2000;
+            fx.connectedBody = GetComponent<Rigidbody>();
+        }
+        held = true;
     }
 
     public override void Release(GameObject controller)
@@ -29,13 +43,24 @@ public class VRIO_Pickup : VRInteractableObject
         {
             GetComponent<Return>().beingHeld = false;
         }
-        if (controller == currentController && controller.GetComponent<FixedJoint>())
+        if (controller == currentController)
         {
-            controller.GetComponent<FixedJoint>().connectedBody = null;
-            Destroy(controller.GetComponent<FixedJoint>());
-            GetComponent<Rigidbody>().velocity = velocity;
-            GetComponent<Rigidbody>().angularVelocity = SteamVR_Controller.Input((int)controller.GetComponent<SteamVR_TrackedObject>().index).angularVelocity;
+            if (isParented)
+            {
+                transform.parent = null;
+                GetComponent<Rigidbody>().isKinematic = false;
+                GetComponent<Rigidbody>().velocity = velocity;
+                GetComponent<Rigidbody>().angularVelocity = SteamVR_Controller.Input((int)controller.GetComponent<SteamVR_TrackedObject>().index).angularVelocity;
+            }
+            else if (controller.GetComponent<FixedJoint>())
+            {
+                controller.GetComponent<FixedJoint>().connectedBody = null;
+                Destroy(controller.GetComponent<FixedJoint>());
+                GetComponent<Rigidbody>().velocity = velocity;
+                GetComponent<Rigidbody>().angularVelocity = SteamVR_Controller.Input((int)controller.GetComponent<SteamVR_TrackedObject>().index).angularVelocity;
+            }
         }
+        held = false;
         base.Release(controller);
     }
 

@@ -7,7 +7,7 @@ public class XylophoneLevel : MonoBehaviour
 
     public LoadNextLevel manager;
 
-    string[] order = { "F", "D", "C6", "B", "G", "C7", };
+    string[] order = { "F", "D", "A", "C7" };
 
     int index = 0;
 
@@ -28,7 +28,7 @@ public class XylophoneLevel : MonoBehaviour
         if (note == order[index])
         {
             index += 1;
-            if (index == 6)
+            if (index == 4)
             {
                 manager.NextLevel("Level4");
             }
