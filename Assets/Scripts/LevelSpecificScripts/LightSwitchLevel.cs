@@ -15,17 +15,12 @@ public class LightSwitchLevel : MonoBehaviour
     bool power = false;
     public GameObject lights;
 
+    public List<AudioClip> waitingClips;
+    AudioSource aud;
 
-    // Use this for initialization
-    void Start()
+    private void Start()
     {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-       
+        StartCoroutine("Waiting");
     }
 
     public void Press(string name)
@@ -39,12 +34,41 @@ public class LightSwitchLevel : MonoBehaviour
             if (name == "8") {
                 index += 1;
                 if (index == 7) {
+                    StopAllCoroutines();
                     manager.NextLevel("Level7");
                 }
             } else {
                 index = 0;
             }
         }
-        
     }
+
+    IEnumerator Waiting()
+    {
+        aud = GetComponent<AudioSource>();
+        List<AudioClip> usedClips = new List<AudioClip>();
+        yield return new WaitForSeconds(aud.clip.length);
+
+        int index;
+
+        while (true)
+        {
+            yield return new WaitForSeconds(10f);
+            index = Random.Range(0, waitingClips.Count);
+            aud.clip = waitingClips[index];
+            aud.Play();
+            usedClips.Add(waitingClips[index]);
+            waitingClips.RemoveAt(index);
+            if (waitingClips.Count == 0)
+            {
+                foreach(AudioClip clip in usedClips)
+                {
+                    waitingClips.Add(clip);
+                }
+                usedClips.Clear();
+            }
+            yield return new WaitForSeconds(aud.clip.length);
+        }
+    }
+
 }

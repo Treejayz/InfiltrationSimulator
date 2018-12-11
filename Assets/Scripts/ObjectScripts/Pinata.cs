@@ -6,7 +6,7 @@ public class Pinata : MonoBehaviour {
 
     public GameObject key;
 
-    public float maxDamage = 30f;
+    public float maxDamage = 3f;
 
     float damage = 0f;
 
@@ -14,8 +14,8 @@ public class Pinata : MonoBehaviour {
     {
         if (col.gameObject.name == "Bat")
         {
-            print(col.impulse.magnitude);
-            damage += col.impulse.magnitude;
+            damage += 1f;
+            col.gameObject.SendMessage("SendPulse", (ushort)4000);
             if (damage > maxDamage)
             {
                 GameObject spawnedKey = Instantiate(key, transform.position, transform.rotation);

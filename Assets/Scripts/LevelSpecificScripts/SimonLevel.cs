@@ -7,6 +7,9 @@ public class SimonLevel : MonoBehaviour
 
     public LoadNextLevel manager;
 
+    public AudioClip notListening;
+    public AudioClip repeat;
+
     public GameObject[] lights;
 
     public Material[] baseMats;
@@ -23,6 +26,7 @@ public class SimonLevel : MonoBehaviour
     private void Start()
     {
         StartCoroutine("Flashing");
+        StartCoroutine("Repeat");
     }
 
     public void Press(string name)
@@ -46,6 +50,7 @@ public class SimonLevel : MonoBehaviour
             index += 1;
             if (index == realOrder.Length)
             {
+                StopAllCoroutines();
                 manager.NextLevel("Level5");
             }
         } else
@@ -71,6 +76,26 @@ public class SimonLevel : MonoBehaviour
 
             }
         }
+    }
+
+    IEnumerator Repeat()
+    {
+        AudioSource aud = GetComponent<AudioSource>();
+
+        yield return new WaitForSeconds(aud.clip.length + 8f);
+
+        aud.clip = notListening;
+        aud.Play();
+        yield return new WaitForSeconds(notListening.length + 8f);
+
+        while (true)
+        {
+            aud.clip = repeat;
+            aud.Play();
+            yield return new WaitForSeconds(repeat.length + 8f);
+        }
+
+
     }
 
 }

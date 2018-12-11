@@ -5,6 +5,7 @@ using UnityEngine;
 public class LoadNextLevel : MonoBehaviour {
 	
 	bool triggered = false;
+    public AudioClip endClip;
 
     public void NextLevel(string level)
     {
@@ -17,7 +18,10 @@ public class LoadNextLevel : MonoBehaviour {
 
 	IEnumerator LoadLevel(string level) {
 		GetComponent<ParticleSystem>().Play();
-		yield return new WaitForSeconds(6f);
+        GetComponent<AudioSource>().loop = false;
+        GetComponent<AudioSource>().clip = endClip;
+        GetComponent<AudioSource>().Play();
+        yield return new WaitForSeconds(6f);
 		SteamVR_LoadLevel.Begin(level);
 	}
 }

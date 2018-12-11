@@ -7,9 +7,13 @@ public class XylophoneLevel : MonoBehaviour
 
     public LoadNextLevel manager;
 
-    string[] order = { "F", "D", "A", "C7" };
+    public AudioClip thatSoundNice;
+
+    string[] order = { "F", "D", "A", "C7", "Done" };
 
     int index = 0;
+
+    bool unhit = true;
 
     // Use this for initialization
     void Start()
@@ -25,6 +29,13 @@ public class XylophoneLevel : MonoBehaviour
 
     public void HitNote(string note)
     {
+        if (unhit)
+        {
+            unhit = false;
+            GetComponent<AudioSource>().clip = thatSoundNice;
+            GetComponent<AudioSource>().Play();
+        }
+
         if (note == order[index])
         {
             index += 1;

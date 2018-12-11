@@ -12,6 +12,7 @@ public class XylophoneBar : MonoBehaviour {
 		if (col.gameObject.name == "Drumstick" && !cooldown) {
             manager.HitNote(name);
 			GetComponent<AudioSource>().Play();
+            col.gameObject.SendMessage("SendPulse", (ushort)4000);
             cooldown = true;
             StartCoroutine("Wait");
 		}

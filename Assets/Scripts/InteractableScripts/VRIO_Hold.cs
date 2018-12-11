@@ -30,7 +30,7 @@ public class VRIO_Hold : VRInteractableObject
         if (isParented)
         {
             transform.parent = controller.transform;
-            GetComponent<Rigidbody>().isKinematic = true;
+            GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
         }
         else
         {
@@ -53,7 +53,7 @@ public class VRIO_Hold : VRInteractableObject
             if (isParented)
             {
                 transform.parent = null;
-                GetComponent<Rigidbody>().isKinematic = false;
+                GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
                 GetComponent<Rigidbody>().velocity = velocity;
                 GetComponent<Rigidbody>().angularVelocity = SteamVR_Controller.Input((int)controller.GetComponent<SteamVR_TrackedObject>().index).angularVelocity;
             }
@@ -76,6 +76,14 @@ public class VRIO_Hold : VRInteractableObject
         {
             velocity = (currentController.transform.position - prevPos) * (1f/Time.fixedDeltaTime);
             prevPos = currentController.transform.position;
+        }
+    }
+
+    public void SendPulse(ushort pulse)
+    {
+        if (grabbed)
+        {
+            SteamVR_Controller.Input((int)currentController.GetComponent<SteamVR_TrackedObject>().index).TriggerHapticPulse(pulse);
         }
     }
 }

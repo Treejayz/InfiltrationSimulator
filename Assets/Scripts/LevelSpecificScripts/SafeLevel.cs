@@ -9,6 +9,8 @@ public class SafeLevel : MonoBehaviour
 
     public VRIO_Safe safe;
 
+    public AudioClip loop;
+
     int[] order = { 8, 15, 10 };
 
     int index = 0;
@@ -20,8 +22,8 @@ public class SafeLevel : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        aud = GetComponent<AudioSource>();
-
+        aud = GetComponents<AudioSource>()[1];
+        StartCoroutine("StartLoop");
     }
 
     // Update is called once per frame
@@ -63,6 +65,16 @@ public class SafeLevel : MonoBehaviour
         }
 
     }
+
+    IEnumerator StartLoop()
+    {
+        AudioSource voiceAud = GetComponent<AudioSource>();
+        yield return new WaitForSeconds(voiceAud.clip.length);
+        voiceAud.loop = true;
+        voiceAud.clip = loop;
+        voiceAud.Play();
+    }
+
 
 }
 
