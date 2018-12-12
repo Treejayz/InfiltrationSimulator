@@ -51,7 +51,10 @@ public class VRIO_Safe : VRInteractableObject
                 value = temp;
                 SteamVR_Controller.Input((int)currentController.GetComponent<SteamVR_TrackedObject>().index).TriggerHapticPulse(2000);
                 print(value + ", " + angle);
-
+                if (GetComponent<AudioSource>() != null)
+                {
+                    GetComponent<AudioSource>().Play();
+                }
             }
         }
 

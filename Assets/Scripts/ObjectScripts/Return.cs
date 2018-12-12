@@ -9,6 +9,8 @@ public class Return : MonoBehaviour {
 
     public bool beingHeld = false;
 
+    public GameObject poof;
+
     float time = 0f;
     Rigidbody rb;
 
@@ -24,8 +26,14 @@ public class Return : MonoBehaviour {
 		if (!beingHeld && Vector3.Distance(transform.position, startPos) > 0.5f)
         {
             time += Time.deltaTime;
-            if (time > 4f)
+            if (time > 5f)
             {
+                if (poof != null)
+                {
+                    Instantiate(poof, transform.position, Quaternion.identity);
+                    Instantiate(poof, startPos, Quaternion.identity);
+                }
+
                 transform.position = startPos;
                 transform.rotation = startRot;
                 

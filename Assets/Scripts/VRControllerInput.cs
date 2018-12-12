@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class VRControllerInput : MonoBehaviour {
@@ -9,6 +10,9 @@ public class VRControllerInput : MonoBehaviour {
 
     Vector3 regularTriggerSize;
     Vector3 holdingTriggerSize;
+
+    float holdTime = 0f;
+    bool loading = false;
 
     protected SteamVR_TrackedObject trackedObj;
     public SteamVR_Controller.Device device
@@ -84,6 +88,30 @@ public class VRControllerInput : MonoBehaviour {
             currentHeld.GetComponent<VRInteractableObject>().Release(this.gameObject);
             GetComponent<BoxCollider>().size = regularTriggerSize;
             currentHeld = null;
+        }
+
+        if (device.GetPress(SteamVR_Controller.ButtonMask.ApplicationMenu))
+        {
+            holdTime += Time.deltaTime;
+            if (holdTime > 5f && !loading)
+            {
+                loading = true;
+                int index = SceneManager.GetActiveScene().buildIndex + 1;
+                if (index >= SceneManager.sceneCountInBuildSettings)
+                {
+                    index = 0;
+                }
+                string path = SceneUtility.GetScenePathByBuildIndex(index);
+                int slash = path.LastIndexOf('/');
+                string name = path.Substring(slash + 1);
+                int dot = name.LastIndexOf('.');
+                SteamVR_LoadLevel.Begin(name.Substring(0, dot));
+            }
+        }
+
+        if (device.GetPressUp(SteamVR_Controller.ButtonMask.ApplicationMenu))
+        {
+            holdTime = 0f;
         }
     }
 }

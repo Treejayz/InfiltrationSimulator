@@ -16,12 +16,13 @@ public class Pinata : MonoBehaviour {
         {
             damage += 1f;
             col.gameObject.SendMessage("SendPulse", (ushort)4000);
-            if (damage > maxDamage)
+            if (damage >= maxDamage)
             {
                 GameObject spawnedKey = Instantiate(key, transform.position, transform.rotation);
                 spawnedKey.GetComponent<Rigidbody>().velocity = col.impulse * -0.3f;
                 transform.GetChild(0).gameObject.SetActive(false);
                 GetComponent<Collider>().isTrigger = true;
+                GetComponent<ParticleSystem>().Play();
             }
             GetComponent<AudioSource>().Play();
         }
@@ -31,5 +32,6 @@ public class Pinata : MonoBehaviour {
     {
         transform.GetChild(0).gameObject.SetActive(true);
         GetComponent<Collider>().isTrigger = false;
+        damage = 0;
     }
 }
