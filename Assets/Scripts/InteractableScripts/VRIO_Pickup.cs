@@ -34,6 +34,11 @@ public class VRIO_Pickup : VRInteractableObject
             fx.breakTorque = 2000;
             fx.connectedBody = GetComponent<Rigidbody>();
         }
+
+        if (GetComponent<AudioSource>() != null)
+        {
+            GetComponent<AudioSource>().Play();
+        }
         held = true;
     }
 

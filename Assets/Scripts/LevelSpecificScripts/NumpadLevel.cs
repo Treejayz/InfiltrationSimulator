@@ -14,120 +14,38 @@ public class NumpadLevel : MonoBehaviour
 
     bool holding = false;
 
+    int[] password = { 6, 9, 4, 2, 0 };
 
-    // Use this for initialization
-    void Start()
+    bool firstGrab = false;
+    public AudioClip omg;
+    public VRIO_Pickup recorder;
+
+    private void Update()
     {
-
+        if (!firstGrab && recorder.grabbed)
+        {
+            firstGrab = true;
+            GetComponent<AudioSource>().clip = omg;
+            GetComponent<AudioSource>().PlayDelayed(recorder.gameObject.GetComponent<AudioSource>().clip.length + 0.3f);
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Press(string name)
     {
-        if (holding)
+        int number = int.Parse(name);
+
+        if (password[index] == number)
         {
-            holding = false;
-            foreach (VRIO_Button button in Buttons)
+            index += 1;
+            if (index == password.Length)
             {
-                if (button.pressed)
-                {
-                    holding = true;
-                }
+                StopAllCoroutines();
+                manager.NextLevel("Level3");
             }
         }
         else
         {
-            switch (index)
-            {
-                case 0:
-                    if (Buttons[6].pressed)
-                    {
-                        index += 1;
-                        holding = true;
-                        print("6");
-                    }
-                    break;
-
-                case 1:
-                    if (Buttons[9].pressed)
-                    {
-                        index += 1;
-                        holding = true;
-                        print("9");
-                    }
-                    else
-                    {
-                        foreach (VRIO_Button button in Buttons)
-                        {
-                            if (button.pressed)
-                            {
-                                index = 0;
-                                break;
-                            }
-                        }
-                    }
-                    break;
-
-                case 2:
-                    if (Buttons[4].pressed)
-                    {
-                        index += 1;
-                        holding = true;
-                        print("4");
-                    }
-                    else
-                    {
-                        foreach (VRIO_Button button in Buttons)
-                        {
-                            if (button.pressed)
-                            {
-                                index = 0;
-                                break;
-                            }
-                        }
-                    }
-                    break;
-
-                case 3:
-                    if (Buttons[2].pressed)
-                    {
-                        index += 1;
-                        holding = true;
-                        print("2");
-                    }
-                    else
-                    {
-                        foreach (VRIO_Button button in Buttons)
-                        {
-                            if (button.pressed)
-                            {
-                                index = 0;
-                                break;
-                            }
-                        }
-                    }
-                    break;
-
-                case 4:
-                    if (Buttons[0].pressed)
-                    {
-                        manager.NextLevel("Level3");
-                        print("0");
-                    }
-                    else
-                    {
-                        foreach (VRIO_Button button in Buttons)
-                        {
-                            if (button.pressed)
-                            {
-                                index = 0;
-                                break;
-                            }
-                        }
-                    }
-                    break;
-
-            }
+            index = 0;
         }
     }
 }

@@ -18,8 +18,8 @@ public class SimonLevel : MonoBehaviour
     bool holding = false;
 
     // Red, Green, Blue, Yellow = 0, 1, 2, 3
-    int[] order = { 2, 1, 1, 0, 2, 3, 3, 3 };
-    int[] realOrder = { 2, 1, 2, 0, 1, 2, 3, 3 };
+    int[] order = { 2, 1, 1, 0, 2, 3, 3, 0 };
+    int[] realOrder = { 2, 1, 2, 1, 2, 3, 3, 0 };
 
     int index = 0;
 
@@ -51,7 +51,7 @@ public class SimonLevel : MonoBehaviour
             if (index == realOrder.Length)
             {
                 StopAllCoroutines();
-                manager.NextLevel("Level5");
+                manager.NextLevel("LevelStart");
             }
         } else
         {

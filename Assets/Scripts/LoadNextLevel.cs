@@ -20,7 +20,7 @@ public class LoadNextLevel : MonoBehaviour {
 		GetComponent<ParticleSystem>().Play();
         GetComponent<AudioSource>().loop = false;
         GetComponent<AudioSource>().clip = endClip;
-        GetComponent<AudioSource>().Play();
+        GetComponent<AudioSource>().PlayDelayed(0.5f);
         yield return new WaitForSeconds(6f);
 		SteamVR_LoadLevel.Begin(level);
 	}

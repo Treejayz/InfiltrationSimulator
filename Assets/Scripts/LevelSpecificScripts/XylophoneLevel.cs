@@ -33,7 +33,7 @@ public class XylophoneLevel : MonoBehaviour
         {
             unhit = false;
             GetComponent<AudioSource>().clip = thatSoundNice;
-            GetComponent<AudioSource>().Play();
+            GetComponent<AudioSource>().PlayDelayed(1.5f);
         }
 
         if (note == order[index])
@@ -41,7 +41,7 @@ public class XylophoneLevel : MonoBehaviour
             index += 1;
             if (index == 4)
             {
-                manager.NextLevel("Level4");
+                manager.NextLevel("Level5");
             }
         } else
         {

@@ -21,9 +21,9 @@ GameObject:
   - component: {fileID: 4910920574286058}
   - component: {fileID: 33630566651036788}
   - component: {fileID: 23656009693006932}
-  - component: {fileID: 136647076922631578}
   - component: {fileID: 54111245010906220}
   - component: {fileID: 114093443785439712}
+  - component: {fileID: 65316484496530398}
   m_Layer: 0
   m_Name: Key
   m_TagString: Untagged
@@ -38,8 +38,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1375351058170542}
   m_LocalRotation: {x: 0.50000006, y: 0.5, z: 0.50000006, w: 0.5}
-  m_LocalPosition: {x: -0.598, y: 0.878, z: -0.726}
-  m_LocalScale: {x: 0.048716202, y: 0.107711546, z: 0.048716202}
+  m_LocalPosition: {x: -0.91499674, y: 0.024358, z: 0.49467778}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -85,7 +85,7 @@ MeshFilter:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1375351058170542}
-  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 4300000, guid: 35702c0e74a274646951ab404825d9ea, type: 3}
 --- !u!54 &54111245010906220
 Rigidbody:
   m_ObjectHideFlags: 1
@@ -101,6 +101,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &65316484496530398
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1375351058170542}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.15, y: 0.58, z: 0.22}
+  m_Center: {x: 0.00000007816333, y: -0.17130648, z: 0.000000020421313}
 --- !u!114 &114093443785439712
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -115,16 +127,4 @@ MonoBehaviour:
   grabbed: 0
   currentController: {fileID: 0}
   isParented: 0
---- !u!136 &136647076922631578
-CapsuleCollider:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1375351058170542}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5000001
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+  held: 0

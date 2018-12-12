@@ -8,23 +8,20 @@ public class Door : MonoBehaviour {
 
     public LoadNextLevel manager;
 
+    public GameObject pinata;
+
     void OnCollisionEnter(Collision col)
     {
         if (col.gameObject.name == "Key(Clone)" && col.gameObject.GetComponent<VRIO_Pickup>().held)
         {
+            Destroy(col.gameObject);
             if (correctDoor) {
-                manager.NextLevel("Level8");
-                Destroy(col.gameObject);
+                manager.NextLevel("Level4");
             }
             else
             {
-
+                pinata.GetComponent<Pinata>().Respawn();
             }
         }
     }
-
-    // Update is called once per frame
-    void Update () {
-		
-	}
 }

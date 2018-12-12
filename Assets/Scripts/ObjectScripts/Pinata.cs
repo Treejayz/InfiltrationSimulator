@@ -20,13 +20,16 @@ public class Pinata : MonoBehaviour {
             {
                 GameObject spawnedKey = Instantiate(key, transform.position, transform.rotation);
                 spawnedKey.GetComponent<Rigidbody>().velocity = col.impulse * -0.3f;
-                Destroy(this.gameObject);
+                transform.GetChild(0).gameObject.SetActive(false);
+                GetComponent<Collider>().isTrigger = true;
             }
+            GetComponent<AudioSource>().Play();
         }
     }
 
-    // Update is called once per frame
-    void Update () {
-		
-	}
+    public void Respawn()
+    {
+        transform.GetChild(0).gameObject.SetActive(true);
+        GetComponent<Collider>().isTrigger = false;
+    }
 }
